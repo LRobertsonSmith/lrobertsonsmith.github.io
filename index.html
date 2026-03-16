@@ -1,0 +1,1022 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Portfolio — Risk & Data Professional</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@300;400;500&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #0b0c0e;
+      --surface: #13151a;
+      --surface2: #1c1f27;
+      --border: rgba(255,255,255,0.07);
+      --accent: #c8f135;
+      --accent2: #4af0c4;
+      --text: #e8eaf0;
+      --muted: #6b7280;
+      --serif: 'DM Serif Display', Georgia, serif;
+      --mono: 'DM Mono', monospace;
+      --sans: 'DM Sans', sans-serif;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: var(--sans);
+      font-size: 16px;
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+
+    /* ── NOISE OVERLAY ── */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+      pointer-events: none;
+      z-index: 0;
+      opacity: 0.4;
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1.25rem 3rem;
+      background: rgba(11,12,14,0.85);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .nav-logo {
+      font-family: var(--mono);
+      font-size: 0.85rem;
+      color: var(--accent);
+      letter-spacing: 0.08em;
+      text-decoration: none;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 2rem;
+      list-style: none;
+    }
+
+    .nav-links a {
+      font-family: var(--mono);
+      font-size: 0.78rem;
+      letter-spacing: 0.06em;
+      color: var(--muted);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+
+    .nav-links a:hover { color: var(--text); }
+
+    /* ── HERO ── */
+    #hero {
+      position: relative;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      padding: 6rem 3rem 4rem;
+      overflow: hidden;
+    }
+
+    .hero-grid-bg {
+      position: absolute;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(200,241,53,0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(200,241,53,0.03) 1px, transparent 1px);
+      background-size: 60px 60px;
+      pointer-events: none;
+    }
+
+    .hero-glow {
+      position: absolute;
+      width: 600px;
+      height: 600px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(200,241,53,0.08) 0%, transparent 70%);
+      top: -100px;
+      right: -100px;
+      pointer-events: none;
+    }
+
+    .hero-content {
+      position: relative;
+      max-width: 900px;
+      animation: fadeUp 0.9s ease both;
+    }
+
+    .hero-label {
+      font-family: var(--mono);
+      font-size: 0.75rem;
+      letter-spacing: 0.15em;
+      color: var(--accent);
+      text-transform: uppercase;
+      margin-bottom: 1.5rem;
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .hero-label::before {
+      content: '';
+      display: inline-block;
+      width: 2rem;
+      height: 1px;
+      background: var(--accent);
+    }
+
+    h1 {
+      font-family: var(--serif);
+      font-size: clamp(3rem, 7vw, 6rem);
+      line-height: 1.05;
+      font-weight: 400;
+      margin-bottom: 1.5rem;
+      letter-spacing: -0.02em;
+    }
+
+    h1 em {
+      font-style: italic;
+      color: var(--accent);
+    }
+
+    .hero-sub {
+      font-size: 1.1rem;
+      color: var(--muted);
+      max-width: 540px;
+      line-height: 1.7;
+      margin-bottom: 2.5rem;
+    }
+
+    .hero-ctas {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+
+    .btn {
+      font-family: var(--mono);
+      font-size: 0.8rem;
+      letter-spacing: 0.08em;
+      padding: 0.85rem 2rem;
+      border-radius: 4px;
+      text-decoration: none;
+      transition: all 0.2s;
+      cursor: pointer;
+      border: none;
+    }
+
+    .btn-primary {
+      background: var(--accent);
+      color: #0b0c0e;
+      font-weight: 500;
+    }
+
+    .btn-primary:hover {
+      background: #d8ff45;
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(200,241,53,0.25);
+    }
+
+    .btn-ghost {
+      background: transparent;
+      color: var(--text);
+      border: 1px solid var(--border);
+    }
+
+    .btn-ghost:hover {
+      border-color: rgba(255,255,255,0.25);
+      background: var(--surface);
+    }
+
+    .hero-stats {
+      position: absolute;
+      right: 3rem;
+      bottom: 4rem;
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+      animation: fadeUp 1.1s ease both;
+    }
+
+    .stat {
+      text-align: right;
+    }
+
+    .stat-number {
+      font-family: var(--serif);
+      font-size: 2.5rem;
+      line-height: 1;
+      color: var(--text);
+    }
+
+    .stat-label {
+      font-family: var(--mono);
+      font-size: 0.7rem;
+      letter-spacing: 0.1em;
+      color: var(--muted);
+      text-transform: uppercase;
+    }
+
+    /* ── SECTIONS ── */
+    section {
+      position: relative;
+      padding: 6rem 3rem;
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+
+    .section-label {
+      font-family: var(--mono);
+      font-size: 0.72rem;
+      letter-spacing: 0.15em;
+      color: var(--accent);
+      text-transform: uppercase;
+      margin-bottom: 3rem;
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .section-label::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: var(--border);
+    }
+
+    h2 {
+      font-family: var(--serif);
+      font-size: clamp(2rem, 4vw, 3rem);
+      font-weight: 400;
+      line-height: 1.15;
+      margin-bottom: 1.5rem;
+      letter-spacing: -0.01em;
+    }
+
+    /* ── ABOUT ── */
+    .about-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4rem;
+      align-items: start;
+    }
+
+    .about-text p {
+      color: var(--muted);
+      line-height: 1.8;
+      margin-bottom: 1rem;
+      font-size: 1.05rem;
+    }
+
+    .about-text p strong {
+      color: var(--text);
+      font-weight: 500;
+    }
+
+    .about-sidebar {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    .tag-group-label {
+      font-family: var(--mono);
+      font-size: 0.7rem;
+      letter-spacing: 0.12em;
+      color: var(--muted);
+      text-transform: uppercase;
+      margin-bottom: 0.5rem;
+    }
+
+    .tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .tag {
+      font-family: var(--mono);
+      font-size: 0.72rem;
+      padding: 0.35rem 0.85rem;
+      border-radius: 3px;
+      border: 1px solid var(--border);
+      color: var(--muted);
+      background: var(--surface);
+      letter-spacing: 0.04em;
+      transition: all 0.15s;
+    }
+
+    .tag:hover {
+      border-color: rgba(200,241,53,0.3);
+      color: var(--accent);
+    }
+
+    .tag.accent {
+      border-color: rgba(200,241,53,0.3);
+      color: var(--accent);
+      background: rgba(200,241,53,0.05);
+    }
+
+    /* ── SKILLS ── */
+    .skills-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.5rem;
+    }
+
+    .skill-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 1.75rem;
+      transition: border-color 0.2s, transform 0.2s;
+    }
+
+    .skill-card:hover {
+      border-color: rgba(200,241,53,0.2);
+      transform: translateY(-3px);
+    }
+
+    .skill-card-icon {
+      font-size: 1.5rem;
+      margin-bottom: 1rem;
+    }
+
+    .skill-card h3 {
+      font-family: var(--serif);
+      font-size: 1.1rem;
+      font-weight: 400;
+      margin-bottom: 0.75rem;
+    }
+
+    .skill-card p {
+      font-size: 0.85rem;
+      color: var(--muted);
+      line-height: 1.6;
+    }
+
+    .skill-bar-wrap {
+      margin-top: 1rem;
+    }
+
+    .skill-bar-label {
+      display: flex;
+      justify-content: space-between;
+      font-family: var(--mono);
+      font-size: 0.68rem;
+      color: var(--muted);
+      margin-bottom: 0.35rem;
+      letter-spacing: 0.05em;
+    }
+
+    .skill-bar {
+      height: 3px;
+      background: var(--surface2);
+      border-radius: 99px;
+      overflow: hidden;
+    }
+
+    .skill-bar-fill {
+      height: 100%;
+      background: linear-gradient(90deg, var(--accent), var(--accent2));
+      border-radius: 99px;
+      transform-origin: left;
+      animation: barGrow 1s ease forwards;
+      animation-play-state: paused;
+    }
+
+    .skill-bar-fill.animate { animation-play-state: running; }
+
+    @keyframes barGrow {
+      from { transform: scaleX(0); }
+      to { transform: scaleX(1); }
+    }
+
+    /* ── PROJECTS ── */
+    .projects-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1.5rem;
+    }
+
+    .project-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 2rem;
+      position: relative;
+      overflow: hidden;
+      transition: border-color 0.2s, transform 0.2s;
+      cursor: pointer;
+    }
+
+    .project-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 2px;
+      background: linear-gradient(90deg, var(--accent), var(--accent2));
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform 0.3s;
+    }
+
+    .project-card:hover::before { transform: scaleX(1); }
+
+    .project-card:hover {
+      border-color: rgba(200,241,53,0.15);
+      transform: translateY(-4px);
+    }
+
+    .project-card.featured {
+      grid-column: span 2;
+      display: grid;
+      grid-template-columns: 1.2fr 1fr;
+      gap: 2rem;
+      align-items: center;
+    }
+
+    .project-meta {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1rem;
+    }
+
+    .project-type {
+      font-family: var(--mono);
+      font-size: 0.68rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--accent);
+    }
+
+    .project-year {
+      font-family: var(--mono);
+      font-size: 0.68rem;
+      color: var(--muted);
+    }
+
+    .project-card h3 {
+      font-family: var(--serif);
+      font-size: 1.3rem;
+      font-weight: 400;
+      margin-bottom: 0.75rem;
+      line-height: 1.3;
+    }
+
+    .project-card p {
+      font-size: 0.9rem;
+      color: var(--muted);
+      line-height: 1.7;
+      margin-bottom: 1.25rem;
+    }
+
+    .project-stack {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.4rem;
+    }
+
+    .project-stack span {
+      font-family: var(--mono);
+      font-size: 0.65rem;
+      letter-spacing: 0.06em;
+      padding: 0.25rem 0.6rem;
+      border-radius: 3px;
+      background: var(--surface2);
+      color: var(--muted);
+    }
+
+    .project-visual {
+      background: var(--surface2);
+      border-radius: 6px;
+      height: 180px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: var(--mono);
+      font-size: 0.75rem;
+      color: var(--muted);
+      border: 1px solid var(--border);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .chart-bars {
+      display: flex;
+      gap: 6px;
+      align-items: flex-end;
+      height: 100px;
+      padding: 1rem;
+    }
+
+    .bar {
+      width: 18px;
+      border-radius: 3px 3px 0 0;
+      background: linear-gradient(180deg, var(--accent), var(--accent2));
+      opacity: 0.7;
+      animation: barRise 1s ease forwards;
+    }
+
+    @keyframes barRise {
+      from { transform: scaleY(0); transform-origin: bottom; }
+      to { transform: scaleY(1); transform-origin: bottom; }
+    }
+
+    /* ── CONTACT ── */
+    #contact {
+      border-top: 1px solid var(--border);
+    }
+
+    .contact-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4rem;
+      align-items: start;
+    }
+
+    .contact-info p {
+      color: var(--muted);
+      line-height: 1.8;
+      margin-bottom: 2rem;
+    }
+
+    .contact-links {
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+    }
+
+    .contact-link {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      font-family: var(--mono);
+      font-size: 0.8rem;
+      color: var(--muted);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+
+    .contact-link:hover { color: var(--accent); }
+
+    .contact-link-icon {
+      width: 32px;
+      height: 32px;
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.9rem;
+      background: var(--surface);
+    }
+
+    .contact-form {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      gap: 0.4rem;
+    }
+
+    .form-group label {
+      font-family: var(--mono);
+      font-size: 0.7rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+
+    .form-group input,
+    .form-group textarea {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      padding: 0.85rem 1rem;
+      color: var(--text);
+      font-family: var(--sans);
+      font-size: 0.9rem;
+      transition: border-color 0.2s;
+      resize: vertical;
+    }
+
+    .form-group input:focus,
+    .form-group textarea:focus {
+      outline: none;
+      border-color: rgba(200,241,53,0.4);
+    }
+
+    .form-group input::placeholder,
+    .form-group textarea::placeholder { color: var(--muted); }
+
+    /* ── FOOTER ── */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 2rem 3rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-family: var(--mono);
+      font-size: 0.72rem;
+      color: var(--muted);
+    }
+
+    /* ── DIVIDER ── */
+    .full-divider {
+      border: none;
+      border-top: 1px solid var(--border);
+      margin: 0;
+    }
+
+    /* ── ANIMATIONS ── */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(24px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .fade-in {
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.6s ease, transform 0.6s ease;
+    }
+
+    .fade-in.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 768px) {
+      nav { padding: 1rem 1.5rem; }
+      #hero, section { padding: 5rem 1.5rem 3rem; }
+      .about-grid, .contact-grid { grid-template-columns: 1fr; gap: 2rem; }
+      .skills-grid { grid-template-columns: 1fr; }
+      .projects-grid { grid-template-columns: 1fr; }
+      .project-card.featured { grid-column: span 1; grid-template-columns: 1fr; }
+      .hero-stats { display: none; }
+      footer { flex-direction: column; gap: 0.5rem; text-align: center; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav>
+    <a class="nav-logo" href="#">[ YOUR.NAME ]</a>
+    <ul class="nav-links">
+      <li><a href="#about">About</a></li>
+      <li><a href="#skills">Skills</a></li>
+      <li><a href="#projects">Projects</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+  </nav>
+
+  <!-- HERO -->
+  <section id="hero">
+    <div class="hero-grid-bg"></div>
+    <div class="hero-glow"></div>
+    <div class="hero-content">
+      <div class="hero-label">Risk & Data Professional</div>
+      <h1>Turning <em>complex risk</em><br>into clear decisions.</h1>
+      <p class="hero-sub">
+        Operational risk governance, quantitative analytics, and scalable data infrastructure —
+        built at the intersection of finance and technology.
+      </p>
+      <div class="hero-ctas">
+        <a href="#projects" class="btn btn-primary">View Projects</a>
+        <a href="#contact" class="btn btn-ghost">Get in Touch</a>
+      </div>
+    </div>
+    <div class="hero-stats">
+      <div class="stat">
+        <div class="stat-number">5+</div>
+        <div class="stat-label">Years Experience</div>
+      </div>
+      <div class="stat">
+        <div class="stat-number">2LD</div>
+        <div class="stat-label">ORM Governance</div>
+      </div>
+      <div class="stat">
+        <div class="stat-number">12+</div>
+        <div class="stat-label">Regulatory Frameworks</div>
+      </div>
+    </div>
+  </section>
+
+  <hr class="full-divider">
+
+  <!-- ABOUT -->
+  <section id="about">
+    <div class="section-label">About</div>
+    <div class="about-grid fade-in">
+      <div class="about-text">
+        <h2>Risk professional.<br><em>Builder</em> at heart.</h2>
+        <p>
+          With a background spanning <strong>operational risk governance</strong> and <strong>data engineering</strong>,
+          the work sits at a rare intersection: understanding regulatory frameworks deeply enough to challenge them,
+          and building the tools that make compliance visible and measurable.
+        </p>
+        <p>
+          Formal experience architecting Second Line of Defense frameworks, leading independent root cause analyses,
+          and aligning risk appetite to global regulatory standards — including SEC, FINRA, CFTC, MiFID, and Basel III.
+        </p>
+        <p>
+          Equally at home writing a stress-test methodology as spinning up a Power BI dashboard or an automated
+          SharePoint workflow. The goal is always the same: reduce uncertainty, surface insight, and equip decision-makers.
+        </p>
+      </div>
+      <div class="about-sidebar">
+        <div>
+          <div class="tag-group-label">Regulatory Fluency</div>
+          <div class="tags">
+            <span class="tag accent">SEC</span>
+            <span class="tag accent">FINRA</span>
+            <span class="tag accent">CFTC</span>
+            <span class="tag accent">NFA</span>
+            <span class="tag accent">MiFID</span>
+            <span class="tag accent">Basel III</span>
+            <span class="tag accent">Dodd-Frank</span>
+          </div>
+        </div>
+        <div>
+          <div class="tag-group-label">Tools & Platforms</div>
+          <div class="tags">
+            <span class="tag">Power BI</span>
+            <span class="tag">Tableau</span>
+            <span class="tag">Power Automate</span>
+            <span class="tag">SharePoint</span>
+            <span class="tag">Azure AD</span>
+            <span class="tag">Python</span>
+            <span class="tag">SQL</span>
+          </div>
+        </div>
+        <div>
+          <div class="tag-group-label">Domains</div>
+          <div class="tags">
+            <span class="tag">Operational Risk</span>
+            <span class="tag">Internal Controls</span>
+            <span class="tag">ERM</span>
+            <span class="tag">BCP</span>
+            <span class="tag">3rd Party Risk</span>
+            <span class="tag">Data Privacy</span>
+            <span class="tag">ETL</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <hr class="full-divider">
+
+  <!-- SKILLS -->
+  <section id="skills">
+    <div class="section-label">Skills</div>
+    <h2>What gets built<br>and <em>how</em>.</h2>
+    <br><br>
+    <div class="skills-grid fade-in">
+
+      <div class="skill-card">
+        <div class="skill-card-icon">⚖️</div>
+        <h3>Risk Governance</h3>
+        <p>2LD ORM framework design, independent challenge, root cause analysis, and risk appetite alignment across complex regulatory environments.</p>
+        <div class="skill-bar-wrap">
+          <div class="skill-bar-label"><span>Expertise</span><span>95%</span></div>
+          <div class="skill-bar"><div class="skill-bar-fill" style="width:95%"></div></div>
+        </div>
+      </div>
+
+      <div class="skill-card">
+        <div class="skill-card-icon">📊</div>
+        <h3>Data Visualization</h3>
+        <p>KRI dashboards, trend analyses, and executive reporting using Tableau and Power BI — turning raw risk data into actionable narratives.</p>
+        <div class="skill-bar-wrap">
+          <div class="skill-bar-label"><span>Expertise</span><span>90%</span></div>
+          <div class="skill-bar"><div class="skill-bar-fill" style="width:90%"></div></div>
+        </div>
+      </div>
+
+      <div class="skill-card">
+        <div class="skill-card-icon">🔧</div>
+        <h3>M365 Engineering</h3>
+        <p>Scalable workflow automation, SharePoint architecture, and Azure AD integrations built to embed governance into daily operations.</p>
+        <div class="skill-bar-wrap">
+          <div class="skill-bar-label"><span>Expertise</span><span>85%</span></div>
+          <div class="skill-bar"><div class="skill-bar-fill" style="width:85%"></div></div>
+        </div>
+      </div>
+
+      <div class="skill-card">
+        <div class="skill-card-icon">🛡️</div>
+        <h3>Controls & Compliance</h3>
+        <p>Formal internal control design, stress-testing, and gap analysis aligned with SEC, FINRA, CFTC, MiFID, and Basel III requirements.</p>
+        <div class="skill-bar-wrap">
+          <div class="skill-bar-label"><span>Expertise</span><span>93%</span></div>
+          <div class="skill-bar"><div class="skill-bar-fill" style="width:93%"></div></div>
+        </div>
+      </div>
+
+      <div class="skill-card">
+        <div class="skill-card-icon">🔍</div>
+        <h3>Quantitative Analysis</h3>
+        <p>ETL pipeline risk forecasting, network load modeling, and data trend analysis to anticipate and communicate emerging risk exposure.</p>
+        <div class="skill-bar-wrap">
+          <div class="skill-bar-label"><span>Expertise</span><span>80%</span></div>
+          <div class="skill-bar"><div class="skill-bar-fill" style="width:80%"></div></div>
+        </div>
+      </div>
+
+      <div class="skill-card">
+        <div class="skill-card-icon">💼</div>
+        <h3>Finance & CS Foundation</h3>
+        <p>Undergraduate grounding in both finance and computer science — enabling fluent communication across trading desks, tech teams, and regulators.</p>
+        <div class="skill-bar-wrap">
+          <div class="skill-bar-label"><span>Expertise</span><span>88%</span></div>
+          <div class="skill-bar"><div class="skill-bar-fill" style="width:88%"></div></div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <hr class="full-divider">
+
+  <!-- PROJECTS -->
+  <section id="projects">
+    <div class="section-label">Projects</div>
+    <h2>Selected <em>work</em>.</h2>
+    <br><br>
+    <div class="projects-grid fade-in">
+
+      <!-- Featured -->
+      <div class="project-card featured">
+        <div>
+          <div class="project-meta">
+            <span class="project-type">Featured / Risk Analytics</span>
+            <span class="project-year">2024</span>
+          </div>
+          <h3>Global Risk Reporting Dashboard</h3>
+          <p>
+            Architected an end-to-end KRI and ERM reporting suite connecting live data pipelines to executive dashboards.
+            Reduced manual reporting cycles by 60% and surfaced previously invisible cross-regional risk concentrations.
+          </p>
+          <div class="project-stack">
+            <span>Power BI</span><span>Power Automate</span><span>SharePoint</span><span>SQL</span><span>Azure AD</span>
+          </div>
+        </div>
+        <div class="project-visual">
+          <div class="chart-bars">
+            <div class="bar" style="height:40px; animation-delay:0.1s"></div>
+            <div class="bar" style="height:70px; animation-delay:0.2s"></div>
+            <div class="bar" style="height:55px; animation-delay:0.3s"></div>
+            <div class="bar" style="height:90px; animation-delay:0.4s"></div>
+            <div class="bar" style="height:65px; animation-delay:0.5s"></div>
+            <div class="bar" style="height:80px; animation-delay:0.6s"></div>
+            <div class="bar" style="height:45px; animation-delay:0.7s"></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="project-card">
+        <div class="project-meta">
+          <span class="project-type">Internal Controls</span>
+          <span class="project-year">2024</span>
+        </div>
+        <h3>Automated Control Testing Framework</h3>
+        <p>Designed and stress-tested a formal internal control suite spanning operational, financial, and information security domains. Integrated automated evidence collection into M365 environment.</p>
+        <div class="project-stack">
+          <span>SharePoint</span><span>Forms</span><span>Power Automate</span><span>Python</span>
+        </div>
+      </div>
+
+      <div class="project-card">
+        <div class="project-meta">
+          <span class="project-type">Regulatory / Research</span>
+          <span class="project-year">2023</span>
+        </div>
+        <h3>CFTC RER Reporting Pipeline</h3>
+        <p>Built an automated data pipeline and submission framework for CFTC Reportable Event Reporting, reducing preparation time and ensuring consistent regulatory alignment across jurisdictions.</p>
+        <div class="project-stack">
+          <span>Python</span><span>SQL</span><span>Power BI</span><span>CFTC</span>
+        </div>
+      </div>
+
+      <div class="project-card">
+        <div class="project-meta">
+          <span class="project-type">Data Engineering</span>
+          <span class="project-year">2023</span>
+        </div>
+        <h3>ETL Risk Forecasting Model</h3>
+        <p>Leveraged regulatory and industry publications to build a network load forecasting model for ETL pipelines, enabling proactive risk identification ahead of peak processing windows.</p>
+        <div class="project-stack">
+          <span>Python</span><span>Tableau</span><span>SQL</span><span>ETL</span>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <hr class="full-divider">
+
+  <!-- CONTACT -->
+  <section id="contact">
+    <div class="section-label">Contact</div>
+    <div class="contact-grid fade-in">
+      <div class="contact-info">
+        <h2>Let's talk<br><em>risk</em>.</h2>
+        <p>
+          Open to senior risk, quant, and data-adjacent roles — particularly where governance meets engineering.
+          Always happy to connect with practitioners, researchers, and curious people.
+        </p>
+        <div class="contact-links">
+          <a href="mailto:your@email.com" class="contact-link">
+            <span class="contact-link-icon">✉</span>
+            your@email.com
+          </a>
+          <a href="https://linkedin.com/in/yourprofile" class="contact-link" target="_blank">
+            <span class="contact-link-icon">in</span>
+            linkedin.com/in/yourprofile
+          </a>
+          <a href="https://github.com/yourusername" class="contact-link" target="_blank">
+            <span class="contact-link-icon">gh</span>
+            github.com/yourusername
+          </a>
+        </div>
+      </div>
+      <form class="contact-form" onsubmit="handleSubmit(event)">
+        <div class="form-group">
+          <label>Name</label>
+          <input type="text" placeholder="Your name" required>
+        </div>
+        <div class="form-group">
+          <label>Email</label>
+          <input type="email" placeholder="your@email.com" required>
+        </div>
+        <div class="form-group">
+          <label>Message</label>
+          <textarea rows="5" placeholder="What's on your mind?" required></textarea>
+        </div>
+        <button type="submit" class="btn btn-primary" style="align-self:flex-start">Send Message</button>
+      </form>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <span>© 2026 Your Name. All rights reserved.</span>
+    <span>Built with HTML/CSS · Hosted on Cloudflare Pages</span>
+  </footer>
+
+  <script>
+    // Intersection observer for fade-in animations
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          // Animate skill bars when visible
+          entry.target.querySelectorAll('.skill-bar-fill').forEach(bar => {
+            bar.classList.add('animate');
+          });
+        }
+      });
+    }, { threshold: 0.1 });
+
+    document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+
+    // Contact form handler
+    function handleSubmit(e) {
+      e.preventDefault();
+      const btn = e.target.querySelector('button[type="submit"]');
+      btn.textContent = 'Sent ✓';
+      btn.style.background = 'var(--accent2)';
+      setTimeout(() => {
+        btn.textContent = 'Send Message';
+        btn.style.background = '';
+        e.target.reset();
+      }, 3000);
+    }
+  </script>
+</body>
+</html>
